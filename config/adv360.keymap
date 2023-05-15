@@ -5,8 +5,8 @@
 #include <dt-bindings/zmk/backlight.h>
 #include "advkeys.keymap"
 
-#define HYP(key) LS(LC(LA(LG(key))))
-#define HYPER    LS(LC(LA(LGUI)))
+#define HYPER(key) LS(LC(LA(LG(key))))
+#define HYP    LS(LC(LA(LGUI)))
 
 #define MACLOCK  LG(LC(Q))
 
@@ -21,7 +21,7 @@
 #define FNLR   2
 
 #define MO_TOG(layer) &mtg layer layer
-
+#define HYPSPC &htsk SPACE HYP
 
 
 #define NAV_LEFT  &mt HOME     LEFT    // tap: left  | long-tap: beginning of line
@@ -30,6 +30,7 @@
 #define NAV_DOWN  &mt LC(END)  DOWN    // tap: down  | long-tap: end       of document
 #define NAV_BSPC  &mt LC(BSPC) BSPC    // tap: bspc  | long-tap: delete word backward
 #define NAV_DEL   &mt LC(DEL)  DEL     // tap: del   | long-tap: delete word forward
+
 
 &mt {
     flavor = "tap-preferred";
@@ -86,7 +87,24 @@
                 tapping-term-ms = <200>;
                 bindings = <&mo>, <&sl>;
             };
-
+    htsk: behavior_htsk {
+                compatible = "zmk,behavior-hold-tap";
+                label = "htsk";
+                #binding-cells = <2>;
+                flavor = "hold-preferred";
+                tapping-term-ms = <150>;
+                quick-tap-ms = <200>;
+                bindings = <&kp>, <&skq>;
+            };
+     skq: sticky_key_quick_release {
+        compatible = "zmk,behavior-sticky-key";
+        label = "STICKY_KEY_QUICK_RELEASE";
+        #binding-cells = <1>;
+        bindings = <&kp>;
+        release-after-ms = <3500>;
+        quick-release;
+        ignore-modifiers;
+      };
 
    td_rcmdesc: tap_dance_rcmd_esc {
               compatible = "zmk,behavior-tap-dance";
@@ -96,6 +114,13 @@
               bindings = <&sl KEPD>, <&kp ESC>;
     };
 
+   td_hyperalt: tap_dance_hyper_alt {
+              compatible = "zmk,behavior-tap-dance";
+              label = "TAP_DANCE_HYPERALT";
+              #binding-cells = <0>;
+              tapping-term-ms = <350>;
+              bindings = <&kp LALT>, <&htsk HYP HYP>;
+    };
 };
 
 
@@ -113,27 +138,27 @@ keymap {
     default_layer {
       bindings = <
         &kp EQUAL       &kp N1        &kp N2        &kp N3        &kp N4           &kp N5            &tog 1                             &mo 3            &kp N6          &kp N7         &kp N8         &kp N9            &kp N0            &kp MINUS
-        &kp TAB         &kp Q         &kp W         &kp E         &kp R            &kp T             &none                              &none            &kp Y           &kp U          &kp I          &kp O             &kp P             &kp LBKT
-        &kp BACKSPACE   &kp A         &kp S         &kp D         &kp F            &kp G             &kp ESC                            &none            &kp H           &kp J          &kp K          &kp L             &kp SEMI          &lt KEPD SQT
+        &kp TAB         &kp Q         &kp W         &kp E         &kp R            &kp T             &htsk RCMD RCMD                    &htsk RCMD RCMD  &kp Y           &kp U          &kp I          &kp O             &kp P             &kp LBKT
+        &kp BACKSPACE   &kp A         &kp S         &kp D         &kp F            &kp G             &htsk HYP HYP                      &htsk HYP HYP    &kp H           &kp J          &kp K          &kp L             &kp SEMI          &lt KEPD SQT
         &kp LSHFT       &kp Z         &kp X         &kp C         &kp V            &kp B                                                                 &kp N           &kp M          &kp COMMA      &kp DOT           &kp FSLH          &kp RSHFT
         MO_TOG(FNLR)    &kp NUBS      &kp LBKT      &kp DOT       &kp GRAVE                                                                                              &kp LEFT       &kp UP         &kp DOWN          &kp RIGHT         MO_TOG(FNLR)
 
-                                                                                                   &kp RCMD   &kp NUBS    &kp LGUI     &kp RCTRL
-                                                                                                              &kp LCTRL   &kp PG_UP
-                                                                                     &td_rcmdesc   &kp LCMD   &kp LALT    &kp PG_DN    &kp ENTER   &kp SPACE
+                                                                                                  &lt FNLR ESC    &kp NUBS        &kp LGUI     &kp RCTRL
+                                                                                                                  &kp LCTRL       &kp PG_UP
+                                                                                     &td_rcmdesc   &kp LCMD       &td_hyperalt    &kp PG_DN    &kp ENTER  &kp SPACE
      >;};
 
     layer_keypad {
       bindings = <
         &kp EQUAL       &kp N1        &kp N2        &kp N3        &kp N4           &kp N5            &trans                             &mo 3            &kp N6          &kp KP_NUM     &kp KP_EQUAL   &kp KP_DIVIDE     &kp KP_MULTIPLY   &kp MINUS
-        &kp TAB         &kp EXCL      &kp AMPS      &kp QMARK     &kp PLUS         &kp AT            &none                              &none            &kp DOLLAR      &kp UNDER      &kp LBKT       &kp RBKT          &kp EXCL          &kp BSLH
-        &kp BACKSPACE   &kp SLASH     &kp LPAR      &kp EQUAL     &kp N0           &kp LBRC          &kp ESC                            &none            &kp RBRC        &kp N1         &kp STAR       &kp RPAR          &kp MINUS         &kp SQT
+        &kp TAB         &kp EXCL      &kp AMPS      &kp QMARK     &kp PLUS         &kp AT            &htsk RCMD RCMD                    &htsk RCMD RCMD  &kp DOLLAR      &kp UNDER      &kp LBKT       &kp RBKT          &kp EXCL          &kp BSLH
+        &kp BACKSPACE   &kp SLASH     &kp LPAR      &kp EQUAL     &kp N0           &kp LBRC          &htsk HYP HYP                      &htsk HYP HYP    &kp RBRC        &kp N1         &kp STAR       &kp RPAR          &kp MINUS         &kp SQT
         &kp LSHFT       &kp N6        &kp N7        &kp N8        &kp N9           &kp PIPE                                                              &kp BSLH        &kp N2         &kp N3         &kp N4            &kp N5            &kp RSHFT
         MO_TOG(FNLR)    &kp NUBS      &kp LBKT      &kp DOT       &kp GRAVE                                                                                              &kp UP         &kp DOWN       &kp KP_DOT        &kp RBKT          MO_TOG(FNLR)
 
-                                                                                                   &kp RCMD   &kp NUBS    &kp LGUI     &kp RCTRL
-                                                                                                              &kp LCTRL   &kp PG_UP
-                                                                                         &none     &kp LCMD   &kp LALT    &kp PG_DN    &kp ENTER   &kp KP_N0
+                                                                                                  &lt FNLR ESC    &kp NUBS        &kp LGUI     &kp RCTRL
+                                                                                                                  &kp LCTRL       &kp PG_UP
+                                                                                         &none     &kp LCMD       &td_hyperalt    &kp PG_DN    &kp ENTER   &kp KP_N0
     >;};
 
     layer_fn {
