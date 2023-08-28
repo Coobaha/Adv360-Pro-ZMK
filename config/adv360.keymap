@@ -128,9 +128,14 @@ combos {
       compatible = "zmk,combos";
       combo_esc {
           timeout-ms = <COMBO_TIMEOUT>;
-          key-positions = <15 16>;
+          key-positions = <30 31>;
           bindings = <&kp ESC>;
       };
+       combo_esc2 {
+                timeout-ms = <COMBO_TIMEOUT>;
+                key-positions = <37 38>;
+                bindings = <&kp ESC>;
+            };
   };
 
 keymap {
@@ -139,7 +144,7 @@ keymap {
       bindings = <
         &kp EQUAL       &kp N1        &kp N2        &kp N3        &kp N4           &kp N5            &tog 1                             &mo 3            &kp N6          &kp N7         &kp N8         &kp N9            &kp N0            &kp MINUS
         &kp TAB         &kp Q         &kp W         &kp E         &kp R            &kp T             &htsk RCMD RCMD                    &htsk RCMD RCMD  &kp Y           &kp U          &kp I          &kp O             &kp P             &kp LBKT
-        &kp BACKSPACE   &kp A         &kp S         &kp D         &kp F            &kp G             &htsk HYP HYP                      &htsk HYP HYP    &kp H           &kp J          &kp K          &kp L             &kp SEMI          &lt KEPD SQT
+        &kp BACKSPACE   &kp A         &kp S         &kp D         &kp F            &kp G             &htsk HYP HYP                      &kp ESC          &kp H           &kp J          &kp K          &kp L             &kp SEMI          &lt KEPD SQT
         &kp LSHFT       &kp Z         &kp X         &kp C         &kp V            &kp B                                                                 &kp N           &kp M          &kp COMMA      &kp DOT           &kp FSLH          &kp RSHFT
         MO_TOG(FNLR)    &kp NUBS      &kp LBKT      &kp DOT       &kp GRAVE                                                                                              &kp LEFT       &kp UP         &kp DOWN          &kp RIGHT         MO_TOG(FNLR)
 
@@ -152,7 +157,7 @@ keymap {
       bindings = <
         &kp EQUAL       &kp N1        &kp N2        &kp N3        &kp N4           &kp N5            &trans                             &mo 3            &kp N6          &kp KP_NUM     &kp KP_EQUAL   &kp KP_DIVIDE     &kp KP_MULTIPLY   &kp MINUS
         &kp TAB         &kp EXCL      &kp AMPS      &kp QMARK     &kp PLUS         &kp AT            &htsk RCMD RCMD                    &htsk RCMD RCMD  &kp DOLLAR      &kp UNDER      &kp LBKT       &kp RBKT          &kp EXCL          &kp BSLH
-        &kp BACKSPACE   &kp SLASH     &kp LPAR      &kp EQUAL     &kp N0           &kp LBRC          &htsk HYP HYP                      &htsk HYP HYP    &kp RBRC        &kp N1         &kp STAR       &kp RPAR          &kp MINUS         &kp SQT
+        &kp BACKSPACE   &kp SLASH     &kp LPAR      &kp EQUAL     &kp N0           &kp LBRC          &htsk HYP HYP                      &kp ESC          &kp RBRC        &kp N1         &kp STAR       &kp RPAR          &kp MINUS         &kp SQT
         &kp LSHFT       &kp N6        &kp N7        &kp N8        &kp N9           &kp PIPE                                                              &kp BSLH        &kp N2         &kp N3         &kp N4            &kp N5            &kp RSHFT
         MO_TOG(FNLR)    &kp NUBS      &kp LBKT      &kp DOT       &kp GRAVE                                                                                              &kp UP         &kp DOWN       &kp KP_DOT        &kp RBKT          MO_TOG(FNLR)
 
